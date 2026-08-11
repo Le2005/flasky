@@ -1,10 +1,15 @@
 from datetime import datetime, timezone
 
-from flask import Flask, render_template, request
+from flask import Flask, redirect, render_template, request, url_for
 from flask_moment import Moment
 
 app = Flask(__name__)
 moment = Moment(app)
+
+# Dados do aluno usados nos links da aplicação.
+NOME_ALUNO = "Leandro Kauã"
+PRONTUARIO_ALUNO = "PT3037649"
+INSTITUICAO_ALUNO = "IFSP"
 
 
 @app.route("/")
@@ -17,38 +22,56 @@ def index():
 
 @app.route("/identificacao")
 def identificacao():
-    aluno = {
-        "nome": "Leandro Kauã",
-        "ra": "PT3037649",
-        "instituicao": "IFSP",
-    }
-    return render_template("identificacao.html", aluno=aluno)
+    # Mantém a rota simples, mas redireciona para o mesmo formato usado
+    # na aplicação de referência do professor.
+    return redirect(
+        url_for(
+            "user",
+            name=NOME_ALUNO,
+            prontuario=PRONTUARIO_ALUNO,
+            instituicao=INSTITUICAO_ALUNO,
+        )
+    )
 
 
+@app.route("/user/<name>/<prontuario>/<instituicao>")
+def user(name, prontuario, instituicao):
+    return render_template(
+        "identificacao.html",
+        nome=name,
+        prontuario=prontuario,
+        instituicao=instituicao,
+    )
+
+
+# Compatibilidade com a rota utilizada em etapas anteriores.
 @app.route("/user/<name>")
-def user(name):
-    aluno = {
-        "nome": name,
-        "ra": "PT3037649",
-        "instituicao": "IFSP",
-    }
-    return render_template("identificacao.html", aluno=aluno)
+def user_legado(name):
+    return redirect(
+        url_for(
+            "user",
+            name=name,
+            prontuario=PRONTUARIO_ALUNO,
+            instituicao=INSTITUICAO_ALUNO,
+        )
+    )
 
 
 @app.route("/contextorequisicao")
 @app.route("/contexto-requisicao")
-def contexto_requisicao():
-    ip = request.headers.get("X-Forwarded-For", request.remote_addr)
+def contexto_requisicao_sem_nome():
+    return redirect(url_for("contexto_requisicao", name=NOME_ALUNO))
 
-    dados = {
-        "metodo": request.method,
-        "url": request.url,
-        "host": request.host,
-        "user_agent": request.headers.get("User-Agent", "Não informado"),
-        "ip": ip or "Não informado",
-        "idioma": request.headers.get("Accept-Language", "Não informado"),
-    }
-    return render_template("contextorequisicao.html", dados=dados)
+
+@app.route("/contextorequisicao/<name>")
+def contexto_requisicao(name):
+    return render_template(
+        "contextorequisicao.html",
+        nome=name,
+        navegador=request.headers.get("User-Agent", "Não informado"),
+        ip=request.remote_addr or "Não informado",
+        host=request.host,
+    )
 
 
 @app.errorhandler(404)
