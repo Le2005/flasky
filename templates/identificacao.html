@@ -3,10 +3,9 @@
 {% block title %}Identificação | Aula 040{% endblock %}
 
 {% block page_content %}
-<h1>Identificação.</h1>
+<h1>Olá, {{ nome }}!</h1>
 <hr>
 
-<p><strong>Nome:</strong> {{ aluno.nome }}</p>
-<p><strong>RA / Matrícula:</strong> {{ aluno.ra }}</p>
-<p><strong>Instituição:</strong> {{ aluno.instituicao }}</p>
+<h2>Prontuário: {{ prontuario }}</h2>
+<h2>Instituição: {{ instituicao }}</h2>
 {% endblock %}
