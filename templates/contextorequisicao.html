@@ -3,13 +3,10 @@
 {% block title %}Contexto da requisição | Aula 040{% endblock %}
 
 {% block page_content %}
-<h1>Contexto da requisição.</h1>
+<h1>Olá, {{ nome }}!</h1>
 <hr>
 
-<p><strong>Método HTTP:</strong> {{ dados.metodo }}</p>
-<p><strong>URL:</strong> {{ dados.url }}</p>
-<p><strong>Host:</strong> {{ dados.host }}</p>
-<p><strong>Endereço IP:</strong> {{ dados.ip }}</p>
-<p><strong>Idioma aceito:</strong> {{ dados.idioma }}</p>
-<p><strong>Navegador (User-Agent):</strong> {{ dados.user_agent }}</p>
+<h2>Seu navegador é: {{ navegador }}</h2>
+<h2>O IP do computador remoto é: {{ ip }}</h2>
+<h2>O host da aplicação é: {{ host }}</h2>
 {% endblock %}
