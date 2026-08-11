@@ -1,0 +1,64 @@
+body {
+    font-size: 18px;
+    color: #222;
+}
+
+.page-container {
+    width: 74%;
+    max-width: 1420px;
+}
+
+.navbar {
+    min-height: 62px;
+    margin-bottom: 0;
+}
+
+.navbar-brand {
+    height: 62px;
+    line-height: 32px;
+    font-size: 24px;
+}
+
+.navbar-nav > li > a {
+    padding-top: 21px;
+    padding-bottom: 21px;
+}
+
+.brand-prefix {
+    font-style: italic;
+    font-weight: 300;
+}
+
+.main-content {
+    padding-top: 58px;
+}
+
+.main-content h1 {
+    font-size: 46px;
+    font-weight: 300;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.main-content hr {
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 900px) {
+    .page-container {
+        width: 94%;
+    }
+
+    .navbar-brand {
+        font-size: 19px;
+    }
+
+    .main-content {
+        padding-top: 30px;
+    }
+
+    .main-content h1 {
+        font-size: 36px;
+    }
+}
